@@ -179,8 +179,8 @@ export default function StudentEnquiryPage() {
               </h3>
               <div className="flex items-center gap-2.5 text-slate-600">
                 <Phone className="w-4 h-4 text-gold flex-shrink-0" />
-                <a href="tel:+919393594797" className="hover:text-gold transition-colors font-medium">
-                  +91 93935 94797
+                <a href="tel:+918050941407" className="hover:text-gold transition-colors font-medium">
+                  +91 80509 41407
                 </a>
               </div>
               <div className="flex items-center gap-2.5 text-slate-600">

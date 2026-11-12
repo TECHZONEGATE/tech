@@ -290,7 +290,7 @@ export const initialSeminars = [
 export const initialSettings = {
   instituteName: "TECHZONE",
   tagline: "Learn. Prepare. Succeed.",
-  phone: "+91 93935 94797 (Admissions Desk)",
+  phone: "+91 80509 41407 (Admissions Desk)",
   email: "info.techzone.gate@gmail.com",
   supportEmail: "info.techzone.gate@gmail.com",
   address: "TECHZONE Engineering Academy, BDA Layout, Bangalore, 560017",

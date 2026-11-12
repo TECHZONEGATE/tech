@@ -92,9 +92,9 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: "Admissions & Inquiries",
-      detail: settings?.phone || "+91 93935 94797 (Admissions Desk)",
+      detail: settings?.phone || "+91 80509 41407 (Admissions Desk)",
       sub: "Available Monday to Saturday",
-      href: `tel:${settings?.phone || "+919393594797"}`
+      href: `tel:${settings?.phone || "+918050941407"}`
     },
     {
       icon: Mail,

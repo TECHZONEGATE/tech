@@ -3,10 +3,11 @@ import { TopAnnouncementBar } from './TopAnnouncementBar';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { ScrollToTop } from '../common/ScrollToTop';
+import { FloatingWhatsApp } from '../common/FloatingWhatsApp';
 
 export function PageLayout({ children, showAnnouncement = true }) {
   return (
-    <div className="min-h-screen flex flex-col bg-brand-offwhite text-brand-dark selection:bg-gold/30 selection:text-navy-deep font-sans">
+    <div className="min-h-screen flex flex-col bg-brand-offwhite text-brand-dark selection:bg-gold/30 selection:text-navy-deep font-sans relative">
       <ScrollToTop />
       {showAnnouncement && <TopAnnouncementBar />}
       <Navbar />
@@ -14,6 +15,7 @@ export function PageLayout({ children, showAnnouncement = true }) {
         {children}
       </main>
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }
