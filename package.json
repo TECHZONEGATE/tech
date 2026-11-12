@@ -1,0 +1,14 @@
+{
+  "name": "techzone-monorepo",
+  "version": "1.0.0",
+  "description": "TECHZONE — Premier Engineering Examination Institute Web Application",
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "build:client": "cd client && npm run build",
+    "start": "cd server && npm start"
+  },
+  "keywords": ["techzone", "gate", "ese", "psu", "education", "react", "express", "mongodb"],
+  "author": "TECHZONE Creative Team",
+  "license": "ISC"
+}

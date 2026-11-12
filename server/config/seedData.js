@@ -1,0 +1,304 @@
+export const initialCourses = [
+  {
+    id: "mini-gate",
+    slug: "mini-gate",
+    title: "Mini GATE — Subject Wise Preparation",
+    tag: "Subject-Wise Focus",
+    category: "GATE",
+    shortDescription: "Strengthen your understanding of individual subjects through focused, concept-driven GATE preparation.",
+    overview: "Mini GATE is engineered for students and working professionals who want to target specific subjects with laser precision. Whether you are aiming to strengthen high-weightage topics, master challenging conceptual areas, or revise specific modules without enrolling in a full-length batch, this program gives you modular flexibility.",
+    targetAudience: [
+      "Students preparing for GATE who need deep conceptual clarity in specific subjects",
+      "Engineers wanting to revise high-weightage modules before the exam",
+      "College students aligning their university semester subjects with GATE standards",
+      "Aspirants looking for flexible, subject-level learning schedules"
+    ],
+    methodology: [
+      {
+        title: "Concept Clarification",
+        description: "Zero-assumption fundamental lectures starting from ground reality to advanced problem applications."
+      },
+      {
+        title: "Standard Problem Frameworks",
+        description: "Deconstructing past 25 years' GATE questions categorized by difficulty and conceptual patterns."
+      },
+      {
+        title: "Subject Assessment",
+        description: "Topic-wise and comprehensive subject tests to measure accuracy, speed, and conceptual gaps."
+      },
+      {
+        title: "Doubt Resolution",
+        description: "Structured discussion forums and academic guidance for intricate theoretical bottlenecks."
+      }
+    ],
+    availableBranches: [
+      {
+        branchName: "Computer Science & Information Technology (CS/IT)",
+        subjects: [
+          "Data Structures & Algorithms",
+          "Computer Networks",
+          "Operating Systems",
+          "Database Management Systems",
+          "Theory of Computation & Compiler Design",
+          "Digital Logic & Computer Organization",
+          "Discrete Mathematics & Engineering Maths"
+        ]
+      },
+      {
+        branchName: "Mechanical Engineering (ME)",
+        subjects: [
+          "Thermodynamics & Heat Transfer",
+          "Fluid Mechanics & Hydraulic Machines",
+          "Strength of Materials",
+          "Theory of Machines & Vibrations",
+          "Manufacturing Science & Industrial Engineering",
+          "Machine Design",
+          "Engineering Mathematics"
+        ]
+      },
+      {
+        branchName: "Civil Engineering (CE)",
+        subjects: [
+          "Structural Analysis & Mechanics",
+          "Geotechnical & Soil Mechanics",
+          "Environmental Engineering",
+          "Fluid Mechanics & Hydraulics",
+          "Transportation & Highway Engineering",
+          "Surveying & Construction Materials",
+          "Engineering Mathematics"
+        ]
+      },
+      {
+        branchName: "Electrical Engineering (EE)",
+        subjects: [
+          "Power Systems & Fault Analysis",
+          "Electrical Machines",
+          "Control Systems",
+          "Power Electronics & Drives",
+          "Network Theory",
+          "Signals and Systems",
+          "Analog & Digital Electronics"
+        ]
+      },
+      {
+        branchName: "Electronics & Communication (EC)",
+        subjects: [
+          "Signals and Systems",
+          "Communication Systems (Analog & Digital)",
+          "Electromagnetics & Transmission Lines",
+          "Electronic Devices & Circuits (EDC)",
+          "Control Systems",
+          "Network Theory",
+          "Digital Circuits & Microprocessors"
+        ]
+      }
+    ],
+    faqs: [
+      {
+        question: "Can I enroll in multiple subjects simultaneously in Mini GATE?",
+        answer: "Yes, you can select one or more subjects based on your individual preparation priorities."
+      },
+      {
+        question: "Is subject-wise preparation sufficient for GATE?",
+        answer: "Subject-wise preparation is ideal for reinforcing weak subjects or building modular mastery alongside self-study or university coursework."
+      },
+      {
+        question: "Are mock tests included in the subject preparation?",
+        answer: "Yes, each subject module includes topic-wise quizzes and a comprehensive subject-level test to validate preparation depth."
+      }
+    ]
+  },
+  {
+    id: "full-gate",
+    slug: "full-gate",
+    title: "Full GATE — Comprehensive Subject-Wise Preparation",
+    tag: "Comprehensive Pathway",
+    category: "GATE",
+    shortDescription: "Prepare systematically for GATE with a structured approach covering fundamental concepts, problem-solving, practice, and revision.",
+    overview: "The Full GATE program provides a thorough, end-to-end learning roadmap designed to cover the entire engineering syllabus systematically. Built around structured progression, this program emphasizes conceptual depth, mathematical rigor, systematic practice, and simulated examination temperament.",
+    targetAudience: [
+      "Pre-final and final-year engineering students preparing for top GATE percentiles",
+      "Graduates dedicating focused time towards GATE for PSU recruitment or higher education (M.Tech/Ph.D at IISc/IITs)",
+      "Aspirants seeking a structured year-round academic discipline"
+    ],
+    methodology: [
+      {
+        title: "Phase 1: Conceptual Foundations",
+        description: "Exhaustive coverage of engineering mathematics, general aptitude, and core discipline fundamentals."
+      },
+      {
+        title: "Phase 2: Core Subject Deep Dives",
+        description: "In-depth theoretical treatment combined with rigorous analytical derivations and multidimensional problem solving."
+      },
+      {
+        title: "Phase 3: Systematic Revision Cycles",
+        description: "Periodic revision milestones with formula review notebooks and short-concept synthesis."
+      },
+      {
+        title: "Phase 4: Simulated Testing & Analysis",
+        description: "Full-syllabus mock tests with detailed performance analytics, accuracy indices, and negative-marking mitigation."
+      }
+    ],
+    roadmapSteps: [
+      { step: "Step 01", title: "Fundamentals", desc: "Build rock-solid clarity in basic mathematics and core scientific principles." },
+      { step: "Step 02", title: "Core Subjects", desc: "Systematic subject-by-subject curriculum coverage with real-world technical contexts." },
+      { step: "Step 03", title: "Problem Solving", desc: "Extensive problem classification across numerical, conceptual, and multi-concept questions." },
+      { step: "Step 04", title: "Revision", desc: "Structured cycles with concise memory maps and formula retention techniques." },
+      { step: "Step 05", title: "Mock Tests", desc: "National-level test simulation with detailed accuracy and time-management analytics." },
+      { step: "Step 06", title: "Final Preparation", desc: "Targeted error rectification and examination day psychological readiness." }
+    ],
+    availableBranches: [
+      { branchName: "Computer Science & IT (CS/IT)", subjects: ["Complete GATE Syllabus Modules 1 - 10"] },
+      { branchName: "Mechanical Engineering (ME)", subjects: ["Complete GATE Syllabus Modules 1 - 10"] },
+      { branchName: "Civil Engineering (CE)", subjects: ["Complete GATE Syllabus Modules 1 - 10"] },
+      { branchName: "Electrical Engineering (EE)", subjects: ["Complete GATE Syllabus Modules 1 - 10"] },
+      { branchName: "Electronics & Communication (EC)", subjects: ["Complete GATE Syllabus Modules 1 - 10"] }
+    ],
+    faqs: [
+      {
+        question: "When is the ideal time to start Full GATE preparation?",
+        answer: "A preparation timeline of 10 to 14 months allows students to comfortably cover the syllabus, complete multiple revision cycles, and take full test series."
+      },
+      {
+        question: "Does the Full GATE curriculum cover General Aptitude and Engineering Mathematics?",
+        answer: "Yes, both General Aptitude and Engineering Mathematics are integral pillars of the Full GATE curriculum."
+      },
+      {
+        question: "How are student progress and test scores tracked?",
+        answer: "Students receive granular analytical performance reports identifying conceptual weak links and timing efficiency for every test."
+      }
+    ]
+  },
+  {
+    id: "ese",
+    slug: "ese",
+    title: "ESE — Engineering Services Examination",
+    tag: "UPSC Engineering Services",
+    category: "ESE",
+    shortDescription: "Build the technical understanding and examination strategy required for focused Engineering Services Examination preparation.",
+    overview: "The Engineering Services Examination (ESE), administered by the UPSC, demands extraordinary technical breadth, analytical clarity, and precision in conventional descriptive writing. Our ESE preparation pathway is structured to guide engineers through both the Preliminary objective stage and the Mains technical conventional examinations.",
+    targetAudience: [
+      "Aspirants targeting leadership and engineering officer positions in Central Government cadres (CPWD, Railways, MES, Telecommunications)",
+      "Civil, Mechanical, Electrical, and Electronics engineers aspiring for public sector technical governance",
+      "Engineers seeking holistic mastery across both objective and conventional problem formats"
+    ],
+    methodology: [
+      {
+        title: "Stage I (Prelims) Mastery",
+        description: "Concurrent preparation of Paper-I (General Studies & Engineering Aptitude) and Paper-II (Engineering Technical)."
+      },
+      {
+        title: "Stage II (Mains) Conventional Drafting",
+        description: "Step-by-step descriptive derivation practices, schematic diagram drawing skills, and structured presentation techniques."
+      },
+      {
+        title: "General Studies & Ethics Integration",
+        description: "Dedicated coverage of ethics in engineering, project management, standards and quality practices, and environmental issues."
+      },
+      {
+        title: "Rigorous Conventional Evaluation",
+        description: "Periodic conventional test series evaluated with examiner remarks for formatting, assumption documentation, and clarity."
+      }
+    ],
+    availableBranches: [
+      { branchName: "Civil Engineering (CE)", subjects: ["Paper I & II: Preliminary & Conventional Mains"] },
+      { branchName: "Mechanical Engineering (ME)", subjects: ["Paper I & II: Preliminary & Conventional Mains"] },
+      { branchName: "Electrical Engineering (EE)", subjects: ["Paper I & II: Preliminary & Conventional Mains"] },
+      { branchName: "Electronics & Telecomm. (E&T)", subjects: ["Paper I & II: Preliminary & Conventional Mains"] }
+    ],
+    faqs: [
+      {
+        question: "How does ESE preparation differ from GATE?",
+        answer: "While GATE tests deep conceptual and numerical aptitude through objective questions, ESE requires broader syllabus coverage including General Studies for Prelims and elaborate written derivations for Mains."
+      },
+      {
+        question: "Is General Studies included in the ESE program?",
+        answer: "Yes, the Stage I General Studies & Engineering Aptitude papers are systematically addressed alongside core technical modules."
+      }
+    ]
+  },
+  {
+    id: "psu",
+    slug: "psu",
+    title: "PSUs — Public Sector Opportunities Preparation",
+    tag: "PSU Recruitment Strategy",
+    category: "PSU",
+    shortDescription: "Develop the technical knowledge and preparation strategy needed for relevant PSU recruitment examinations.",
+    overview: "India's Maharatna, Navratna, and Miniratna Public Sector Undertakings (such as IOCL, ONGC, NTPC, BHEL, BARC, ISRO, and others) recruit engineering graduates either directly through GATE percentiles or through independent written recruitment examinations. This curriculum prepares candidates for both pathways with rigorous technical readiness and interview awareness.",
+    targetAudience: [
+      "Engineers seeking premier careers in national infrastructure, energy, defense, and public utilities",
+      "Candidates appearing for standalone PSU written examinations (ISRO, BARC, BEL, HAL, etc.)",
+      "GATE aspirants aiming to convert high scores into PSU technical interview selections"
+    ],
+    methodology: [
+      {
+        title: "High-Speed Accuracy Training",
+        description: "Optimized problem solving specifically tailored for high-volume, rapid-fire PSU objective exams."
+      },
+      {
+        title: "Discipline-Specific Technical Core",
+        description: "Targeted coverage of fundamental principles, practical application questions, and industry-oriented problem scenarios."
+      },
+      {
+        title: "Independent Exam Pattern Analysis",
+        description: "Dedicated mock tests mirroring the distinct patterns and syllabus nuances of individual organizations like ISRO and BARC."
+      },
+      {
+        title: "Interview & Technical Discussion Readiness",
+        description: "Guidance on technical viva-voce, major project articulation, and industrial concept presentation."
+      }
+    ],
+    availableBranches: [
+      { branchName: "Mechanical Engineering", subjects: ["Core PSU Technical Suite"] },
+      { branchName: "Electrical Engineering", subjects: ["Core PSU Technical Suite"] },
+      { branchName: "Civil Engineering", subjects: ["Core PSU Technical Suite"] },
+      { branchName: "Electronics & Communication", subjects: ["Core PSU Technical Suite"] },
+      { branchName: "Computer Science & IT", subjects: ["Core PSU Technical Suite"] }
+    ],
+    faqs: [
+      {
+        question: "Do all PSUs recruit exclusively through GATE?",
+        answer: "No. While many Maharatnas recruit through GATE scores, organizations like ISRO, BARC, BEL, NIELIT, and state PSUs frequently conduct their own distinct examinations."
+      },
+      {
+        question: "What is the typical eligibility criteria for PSU engineering recruitment?",
+        answer: "Most PSUs require a full-time B.E./B.Tech degree with a specified minimum percentage (typically 60% to 65% or equivalent CGPA). Specific requirements vary by organization and recruitment notification."
+      }
+    ]
+  }
+];
+
+export const initialSeminars = [
+  {
+    id: "seminar-2026-01",
+    title: "Engineering Opportunities 2026: Navigating GATE, ESE & PSU Pathways",
+    date: "Upcoming (Schedule Announced Shortly)",
+    time: "10:30 AM – 1:00 PM IST",
+    venueOrOnline: "Live Interactive Virtual Session & Campus Auditorium",
+    description: "An intensive orientation session designed to provide aspiring engineers with unvarnished clarity on competitive examination trends, syllabus weightage distributions, public sector career benchmarks, and systematic preparation roadmaps.",
+    registrationStatus: "Open",
+    isPublished: true,
+    highlights: [
+      "Comparative analysis of GATE vs ESE vs PSU career trajectories",
+      "Subject-wise preparation weighting and high-yield topic identification",
+      "Time management strategies for college students and working professionals",
+      "Interactive Q&A session with senior academic mentors"
+    ]
+  }
+];
+
+export const initialSettings = {
+  instituteName: "TECHZONE",
+  tagline: "Learn. Prepare. Succeed.",
+  phone: "+91 93935 94797 (Admissions Desk)",
+  email: "info.techzone.gate@gmail.com",
+  supportEmail: "info.techzone.gate@gmail.com",
+  address: "TECHZONE Engineering Academy, BDA Layout, Bangalore, 560017",
+  workingHours: "Monday – Saturday: 9:00 AM – 7:00 PM IST",
+  announcementBarText: "Empowering Future Engineers Through Focused Preparation",
+  socialLinks: {
+    youtube: "http://www.youtube.com/@TECHZONE-Technical",
+    telegram: "https://t.me/Gate_Ese_DkSirPrep",
+    whatsapp: "https://www.whatsapp.com/channel/0029Vb7sRGZ1XquQ0XFsA32b"
+  }
+};

@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #071B33;
+}
+::-webkit-scrollbar-thumb {
+  background: #245A92;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D8A85F;
+}
+
+/* Subtle background grid pattern */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(216, 168, 95, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(216, 168, 95, 0.04) 1px, transparent 1px);
+}
+
+.bg-dot-pattern {
+  background-image: radial-gradient(rgba(216, 168, 95, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #F0CC8C 0%, #D8A85F 50%, #C99645 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navy-gradient-text {
+  background: linear-gradient(135deg, #102B4E 0%, #071B33 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism subtle styles */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.glass-panel-dark {
+  background: rgba(7, 27, 51, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(216, 168, 95, 0.15);
+}
