@@ -162,16 +162,29 @@ export function HeroSection() {
               {/* Main Visual Glass Card */}
               <div className="relative rounded-3xl bg-navy-surface/90 border border-gold/25 p-6 sm:p-8 shadow-2xl backdrop-blur-xl overflow-hidden">
                 
-                {/* Decorative Technical Header */}
-                <div className="flex items-center justify-between pb-6 border-b border-navy-royal/30">
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-emerald-400" />
-                    <span className="w-3 h-3 rounded-full bg-amber-400" />
-                    <span className="w-3 h-3 rounded-full bg-navy-royal" />
+                {/* Decorative Technical Header with Institute Crest */}
+                <div className="flex items-center justify-between pb-5 border-b border-navy-royal/30">
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl overflow-hidden p-0.5 bg-gradient-to-br from-gold via-gold/40 to-navy-royal shadow-gold-glow flex-shrink-0">
+                      <img 
+                        src="/logo.png" 
+                        alt="TECHZONE Emblem" 
+                        className="w-full h-full object-cover rounded-[10px]" 
+                      />
+                    </div>
+                    <div>
+                      <span className="text-sm font-heading font-extrabold text-white block leading-tight">
+                        TECH<span className="text-gold">ZONE</span>
+                      </span>
+                      <span className="text-[10px] text-slate-300 font-mono">for engineers • Bangalore</span>
+                    </div>
                   </div>
-                  <span className="text-xs font-mono text-gold uppercase tracking-wider font-semibold">
-                    TECHZONE Academic Portal
-                  </span>
+                  <div className="flex items-center gap-1.5 bg-navy-deep/90 px-3 py-1 rounded-full border border-gold/30">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-[11px] font-mono text-gold font-semibold tracking-wider">
+                      GATE • ESE • PSU
+                    </span>
+                  </div>
                 </div>
 
                 {/* Academic Highlights Dashboard Preview */}

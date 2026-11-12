@@ -89,13 +89,13 @@ export function Navbar() {
         <div className="flex items-center justify-between">
           
           {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gold to-[#b58334] p-0.5 shadow-gold-glow flex items-center justify-center transition-transform group-hover:scale-105">
-              <div className="w-full h-full bg-navy-deep rounded-[10px] flex items-center justify-center">
-                <span className="font-heading font-extrabold text-gold text-xl tracking-tighter">
-                  TZ
-                </span>
-              </div>
+          <Link to="/" className="flex items-center gap-3.5 group">
+            <div className="relative w-11 h-11 rounded-2xl overflow-hidden p-0.5 bg-gradient-to-br from-gold/90 via-gold/40 to-navy-royal/60 shadow-gold-glow flex items-center justify-center transition-all duration-300 group-hover:scale-105 flex-shrink-0">
+              <img 
+                src="/logo.png" 
+                alt="TECHZONE Logo" 
+                className="w-full h-full object-cover rounded-[14px]"
+              />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
@@ -104,7 +104,7 @@ export function Navbar() {
                 </span>
               </div>
               <p className="text-[10px] uppercase font-semibold text-slate-300 tracking-widest hidden sm:block">
-                Learn • Prepare • Succeed
+                for engineers • gate • ese • psus
               </p>
             </div>
           </Link>

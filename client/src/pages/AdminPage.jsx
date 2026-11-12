@@ -205,8 +205,8 @@ export default function AdminPage() {
         
         <div className="relative z-10 w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-slate-200">
           <div className="text-center mb-8">
-            <div className="w-14 h-14 rounded-2xl bg-navy-deep text-gold flex items-center justify-center mx-auto mb-3 shadow-gold-glow">
-              <ShieldCheck className="w-8 h-8" />
+            <div className="w-16 h-16 rounded-2xl overflow-hidden p-0.5 bg-gradient-to-br from-gold via-gold/50 to-navy-royal mx-auto mb-3 shadow-gold-glow flex items-center justify-center">
+              <img src="/logo.png" alt="TECHZONE Logo" className="w-full h-full object-cover rounded-[14px]" />
             </div>
             <h1 className="font-heading font-extrabold text-2xl text-navy-deep">
               TECHZONE Admin Portal
@@ -288,8 +288,8 @@ export default function AdminPage() {
       {/* Top Admin Bar */}
       <header className="bg-navy-deep text-white border-b border-navy-royal/50 px-6 py-3.5 sticky top-0 z-30 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gold text-navy-deep font-heading font-black flex items-center justify-center text-sm">
-            TZ
+          <div className="w-9 h-9 rounded-xl overflow-hidden p-0.5 bg-gradient-to-br from-gold/80 to-navy-royal flex items-center justify-center flex-shrink-0">
+            <img src="/logo.png" alt="TECHZONE Logo" className="w-full h-full object-cover rounded-[10px]" />
           </div>
           <div>
             <h2 className="font-heading font-bold text-base text-white leading-none">

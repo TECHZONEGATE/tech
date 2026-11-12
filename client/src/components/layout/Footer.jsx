@@ -55,20 +55,20 @@ export function Footer() {
           
           {/* Column 1: Brand Info (Spans 2 cols on lg) */}
           <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gold to-[#b58334] p-0.5 shadow-gold-glow flex items-center justify-center">
-                <div className="w-full h-full bg-navy-deep rounded-[10px] flex items-center justify-center">
-                  <span className="font-heading font-extrabold text-gold text-xl tracking-tighter">
-                    TZ
-                  </span>
-                </div>
+            <Link to="/" className="flex items-center gap-3.5 group">
+              <div className="relative w-12 h-12 rounded-2xl overflow-hidden p-0.5 bg-gradient-to-br from-gold/90 via-gold/40 to-navy-royal/60 shadow-gold-glow flex items-center justify-center transition-all duration-300 group-hover:scale-105 flex-shrink-0">
+                <img 
+                  src="/logo.png" 
+                  alt="TECHZONE Logo" 
+                  className="w-full h-full object-cover rounded-[14px]"
+                />
               </div>
               <div>
                 <span className="font-heading font-black text-2xl text-white tracking-tight">
                   TECH<span className="text-gold">ZONE</span>
                 </span>
                 <p className="text-[10px] uppercase font-semibold text-slate-300 tracking-widest">
-                  Learn • Prepare • Succeed
+                  Engineering Academy • Bangalore
                 </p>
               </div>
             </Link>
