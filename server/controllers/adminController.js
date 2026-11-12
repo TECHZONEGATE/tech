@@ -64,7 +64,7 @@ export const AdminController = {
   // Public Settings
   async getSettings(req, res) {
     try {
-      const settings = StorageService.getSettings();
+      const settings = await StorageService.getSettings();
       return res.json({ success: true, settings });
     } catch (err) {
       return res.status(500).json({ error: 'Failed to fetch settings.' });
@@ -74,7 +74,7 @@ export const AdminController = {
   // Admin Update Settings
   async updateSettings(req, res) {
     try {
-      const updated = StorageService.updateSettings(req.body);
+      const updated = await StorageService.updateSettings(req.body);
       return res.json({ success: true, settings: updated });
     } catch (err) {
       return res.status(500).json({ error: 'Failed to update settings.' });

@@ -2,6 +2,8 @@ import { loadData, saveData, getMongoStatus } from '../config/dataStore.js';
 import { Enquiry } from '../models/Enquiry.js';
 import { ContactMessage } from '../models/ContactMessage.js';
 import { SeminarRegistration } from '../models/SeminarRegistration.js';
+import { Seminar } from '../models/Seminar.js';
+import { Setting } from '../models/Setting.js';
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 
@@ -260,22 +262,37 @@ export const StorageService = {
   },
 
   // --- SEMINARS ---
-  getSeminars(includeUnpublished = false) {
+  async getSeminars(includeUnpublished = false) {
+    if (getMongoStatus()) {
+      try {
+        const query = includeUnpublished ? {} : { isPublished: true };
+        const docs = await Seminar.find(query).sort({ createdAt: -1 }).lean();
+        if (docs && docs.length > 0) {
+          return docs.map(doc => ({
+            ...doc,
+            id: doc._id.toString()
+          }));
+        }
+      } catch (err) {
+        console.error("[MongoDB Atlas] getSeminars error:", err.message);
+      }
+    }
+
     const data = loadData();
     const seminars = data.seminars || [];
     if (includeUnpublished) return seminars;
     return seminars.filter(s => s.isPublished);
   },
 
-  createSeminar(payload) {
+  async createSeminar(payload) {
     const data = loadData();
     const newSeminar = {
       id: crypto.randomUUID(),
       title: payload.title,
-      date: payload.date,
-      time: payload.time,
-      venueOrOnline: payload.venueOrOnline,
-      description: payload.description,
+      date: payload.date || 'TBA',
+      time: payload.time || 'TBA',
+      venueOrOnline: payload.venueOrOnline || 'Online / Campus',
+      description: payload.description || '',
       registrationStatus: payload.registrationStatus || "Open",
       isPublished: payload.isPublished !== undefined ? payload.isPublished : true,
       highlights: payload.highlights || [],
@@ -284,10 +301,42 @@ export const StorageService = {
 
     data.seminars = [newSeminar, ...(data.seminars || [])];
     saveData(data);
+
+    if (getMongoStatus()) {
+      try {
+        const doc = await Seminar.create({
+          title: newSeminar.title,
+          date: newSeminar.date,
+          time: newSeminar.time,
+          venueOrOnline: newSeminar.venueOrOnline,
+          description: newSeminar.description,
+          registrationStatus: newSeminar.registrationStatus,
+          isPublished: newSeminar.isPublished,
+          highlights: newSeminar.highlights
+        });
+        return { ...newSeminar, id: doc._id.toString() };
+      } catch (err) {
+        console.error("[MongoDB Atlas] Seminar create error:", err.message);
+      }
+    }
+
     return newSeminar;
   },
 
-  updateSeminar(id, payload) {
+  async updateSeminar(id, payload) {
+    if (getMongoStatus()) {
+      try {
+        const isObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+        const query = isObjectId ? { _id: id } : { title: payload.title || id };
+        const updated = await Seminar.findOneAndUpdate(query, payload, { new: true }).lean();
+        if (updated) {
+          return { ...updated, id: updated._id.toString() };
+        }
+      } catch (err) {
+        console.error("[MongoDB Atlas] updateSeminar error:", err.message);
+      }
+    }
+
     const data = loadData();
     const index = (data.seminars || []).findIndex(s => s.id === id);
     if (index === -1) return null;
@@ -300,7 +349,18 @@ export const StorageService = {
     return data.seminars[index];
   },
 
-  deleteSeminar(id) {
+  async deleteSeminar(id) {
+    if (getMongoStatus()) {
+      try {
+        const isObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+        if (isObjectId) {
+          await Seminar.findByIdAndDelete(id);
+        }
+      } catch (err) {
+        console.error("[MongoDB Atlas] deleteSeminar error:", err.message);
+      }
+    }
+
     const data = loadData();
     data.seminars = (data.seminars || []).filter(s => s.id !== id);
     saveData(data);
@@ -399,12 +459,28 @@ export const StorageService = {
   },
 
   // --- SETTINGS ---
-  getSettings() {
+  async getSettings() {
+    if (getMongoStatus()) {
+      try {
+        const doc = await Setting.findOne({}).lean();
+        if (doc) return doc;
+      } catch (err) {
+        console.error("[MongoDB Atlas] getSettings error:", err.message);
+      }
+    }
     const data = loadData();
     return data.settings || {};
   },
 
-  updateSettings(payload) {
+  async updateSettings(payload) {
+    if (getMongoStatus()) {
+      try {
+        const updated = await Setting.findOneAndUpdate({}, payload, { new: true, upsert: true }).lean();
+        if (updated) return updated;
+      } catch (err) {
+        console.error("[MongoDB Atlas] updateSettings error:", err.message);
+      }
+    }
     const data = loadData();
     data.settings = {
       ...data.settings,
@@ -453,22 +529,21 @@ export const StorageService = {
   async getStats() {
     if (getMongoStatus()) {
       try {
-        const [totalEnquiries, newEnquiries, totalContacts, unreadContacts, totalRegistrations] = await Promise.all([
+        const [totalEnquiries, newEnquiries, totalContacts, unreadContacts, totalRegistrations, activeSeminars] = await Promise.all([
           Enquiry.countDocuments({}),
           Enquiry.countDocuments({ status: "New" }),
           ContactMessage.countDocuments({}),
           ContactMessage.countDocuments({ status: "Unread" }),
-          SeminarRegistration.countDocuments({})
+          SeminarRegistration.countDocuments({}),
+          Seminar.countDocuments({ isPublished: true })
         ]);
-        const data = loadData();
-        const seminars = data.seminars || [];
         return {
           totalEnquiries,
           newEnquiries,
           totalContacts,
           unreadContacts,
           totalRegistrations,
-          activeSeminars: seminars.filter(s => s.isPublished).length
+          activeSeminars
         };
       } catch (err) {
         console.error("[MongoDB Atlas] getStats error:", err.message);

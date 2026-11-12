@@ -14,7 +14,7 @@ export const SeminarController = {
   // Public: Get published seminars
   async getPublicSeminars(req, res) {
     try {
-      const seminars = StorageService.getSeminars(false);
+      const seminars = await StorageService.getSeminars(false);
       return res.json({ success: true, count: seminars.length, seminars });
     } catch (err) {
       return res.status(500).json({ error: 'Failed to fetch seminars.' });
@@ -76,7 +76,7 @@ export const SeminarController = {
   // Admin: Get all seminars
   async getAdminSeminars(req, res) {
     try {
-      const seminars = StorageService.getSeminars(true);
+      const seminars = await StorageService.getSeminars(true);
       return res.json({ success: true, count: seminars.length, seminars });
     } catch (err) {
       return res.status(500).json({ error: 'Failed to retrieve seminars.' });
@@ -91,7 +91,7 @@ export const SeminarController = {
         return res.status(400).json({ error: 'Seminar title is required.' });
       }
 
-      const seminar = StorageService.createSeminar({
+      const seminar = await StorageService.createSeminar({
         title: title.trim(),
         date: date ? date.trim() : 'TBA',
         time: time ? time.trim() : 'TBA',
@@ -112,7 +112,7 @@ export const SeminarController = {
   async updateSeminar(req, res) {
     try {
       const { id } = req.params;
-      const updated = StorageService.updateSeminar(id, req.body);
+      const updated = await StorageService.updateSeminar(id, req.body);
       if (!updated) {
         return res.status(404).json({ error: 'Seminar not found.' });
       }
@@ -126,7 +126,7 @@ export const SeminarController = {
   async deleteSeminar(req, res) {
     try {
       const { id } = req.params;
-      StorageService.deleteSeminar(id);
+      await StorageService.deleteSeminar(id);
       return res.json({ success: true, message: 'Seminar deleted successfully.' });
     } catch (err) {
       return res.status(500).json({ error: 'Failed to delete seminar.' });

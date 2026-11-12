@@ -79,6 +79,24 @@ export async function connectDatabase() {
     });
     isMongoConnected = true;
     console.log(`[Database] Successfully connected to MongoDB Atlas!`);
+
+    // Seed seminars and settings to MongoDB Atlas if not yet present
+    try {
+      const { Seminar } = await import('../models/Seminar.js');
+      const seminarCount = await Seminar.countDocuments({});
+      if (seminarCount === 0 && Array.isArray(initialSeminars)) {
+        await Seminar.insertMany(initialSeminars);
+        console.log(`[Database] Seeded initial seminars into MongoDB Atlas.`);
+      }
+      const { Setting } = await import('../models/Setting.js');
+      const settingCount = await Setting.countDocuments({});
+      if (settingCount === 0 && initialSettings) {
+        await Setting.create(initialSettings);
+        console.log(`[Database] Seeded initial settings into MongoDB Atlas.`);
+      }
+    } catch (seedErr) {
+      console.warn(`[Database] Atlas seeding notice:`, seedErr.message);
+    }
   } catch (err) {
     isMongoConnected = false;
     console.log(`[Database] MongoDB not reachable at ${uri}.`);
