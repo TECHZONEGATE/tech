@@ -8,7 +8,7 @@ export function FloatingWhatsApp() {
   return (
     <aside 
       aria-label="Chat with TECHZONE Admissions on WhatsApp"
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 select-none"
+      className="fixed bottom-20 sm:bottom-24 right-5 sm:right-6 z-50 flex items-center gap-3 select-none"
     >
       {/* Tooltip on desktop */}
       <a
