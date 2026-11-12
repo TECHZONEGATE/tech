@@ -45,7 +45,7 @@ export const SeminarController = {
         return res.status(400).json({ error: 'Current year of study is required.' });
       }
 
-      const registration = StorageService.createSeminarRegistration({
+      const registration = await StorageService.createSeminarRegistration({
         fullName: fullName.trim(),
         email: email.trim().toLowerCase(),
         mobileNumber: mobileNumber.trim(),
@@ -137,7 +137,7 @@ export const SeminarController = {
   async getSeminarRegistrations(req, res) {
     try {
       const { seminarId } = req.query;
-      const registrations = StorageService.getSeminarRegistrations(seminarId);
+      const registrations = await StorageService.getSeminarRegistrations(seminarId);
       return res.json({ success: true, count: registrations.length, registrations });
     } catch (err) {
       return res.status(500).json({ error: 'Failed to retrieve registrations.' });

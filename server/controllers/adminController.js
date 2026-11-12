@@ -54,7 +54,7 @@ export const AdminController = {
   // Dashboard Stats
   async getStats(req, res) {
     try {
-      const stats = StorageService.getStats();
+      const stats = await StorageService.getStats();
       return res.json({ success: true, stats });
     } catch (err) {
       return res.status(500).json({ error: 'Failed to retrieve dashboard statistics.' });

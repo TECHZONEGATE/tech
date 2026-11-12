@@ -22,7 +22,7 @@ export const ContactController = {
         return res.status(400).json({ error: 'Message content is required.' });
       }
 
-      const contact = StorageService.createContact({
+      const contact = await StorageService.createContact({
         name: name.trim(),
         email: email.trim().toLowerCase(),
         subject: subject.trim(),
@@ -42,7 +42,7 @@ export const ContactController = {
 
   async getContacts(req, res) {
     try {
-      const contacts = StorageService.getContacts();
+      const contacts = await StorageService.getContacts();
       return res.json({ success: true, count: contacts.length, contacts });
     } catch (err) {
       return res.status(500).json({ error: 'Failed to retrieve messages.' });
@@ -57,7 +57,7 @@ export const ContactController = {
         return res.status(400).json({ error: 'Invalid status.' });
       }
 
-      const updated = StorageService.updateContactStatus(id, status);
+      const updated = await StorageService.updateContactStatus(id, status);
       if (!updated) {
         return res.status(404).json({ error: 'Contact message not found.' });
       }

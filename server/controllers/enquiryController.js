@@ -37,7 +37,7 @@ export const EnquiryController = {
         return res.status(400).json({ error: 'Consent to be contacted is required.' });
       }
 
-      const enquiry = StorageService.createEnquiry({
+      const enquiry = await StorageService.createEnquiry({
         fullName: fullName.trim(),
         email: email.trim().toLowerCase(),
         mobileNumber: mobileNumber.trim(),
@@ -71,7 +71,7 @@ export const EnquiryController = {
   async getEnquiries(req, res) {
     try {
       const { search, course, status } = req.query;
-      const enquiries = StorageService.getEnquiries({ search, course, status });
+      const enquiries = await StorageService.getEnquiries({ search, course, status });
       return res.json({ success: true, count: enquiries.length, enquiries });
     } catch (err) {
       console.error('Error fetching enquiries:', err);
@@ -83,7 +83,7 @@ export const EnquiryController = {
   async getEnquiryById(req, res) {
     try {
       const { id } = req.params;
-      const enquiry = StorageService.getEnquiryById(id);
+      const enquiry = await StorageService.getEnquiryById(id);
       if (!enquiry) {
         return res.status(404).json({ error: 'Enquiry record not found.' });
       }
@@ -112,7 +112,7 @@ export const EnquiryController = {
         updatePayload.noteAuthor = req.admin?.username || 'Admin';
       }
 
-      const updated = StorageService.updateEnquiry(id, updatePayload);
+      const updated = await StorageService.updateEnquiry(id, updatePayload);
       if (!updated) {
         return res.status(404).json({ error: 'Enquiry record not found.' });
       }

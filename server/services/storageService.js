@@ -14,7 +14,35 @@ function generateEnquiryRef() {
 
 export const StorageService = {
   // --- ENQUIRIES ---
-  getEnquiries(filters = {}) {
+  async getEnquiries(filters = {}) {
+    if (getMongoStatus()) {
+      try {
+        const query = {};
+        if (filters.course && filters.course !== 'ALL') {
+          query.interestedCourse = filters.course;
+        }
+        if (filters.status && filters.status !== 'ALL') {
+          query.status = filters.status;
+        }
+        if (filters.search) {
+          const regex = new RegExp(filters.search, 'i');
+          query.$or = [
+            { fullName: regex },
+            { email: regex },
+            { mobileNumber: regex },
+            { referenceNumber: regex }
+          ];
+        }
+        const docs = await Enquiry.find(query).sort({ createdAt: -1 }).lean();
+        return docs.map(doc => ({
+          ...doc,
+          id: doc._id.toString()
+        }));
+      } catch (err) {
+        console.error("[MongoDB Atlas] getEnquiries error:", err.message);
+      }
+    }
+
     const data = loadData();
     let enquiries = data.enquiries || [];
 
@@ -36,16 +64,25 @@ export const StorageService = {
       enquiries = enquiries.filter(e => e.status === filters.status);
     }
 
-    // Sort newest first
     return enquiries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   },
 
-  getEnquiryById(id) {
+  async getEnquiryById(id) {
+    if (getMongoStatus()) {
+      try {
+        const isObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+        const query = isObjectId ? { $or: [{ _id: id }, { referenceNumber: id }] } : { referenceNumber: id };
+        const doc = await Enquiry.findOne(query).lean();
+        if (doc) return { ...doc, id: doc._id.toString() };
+      } catch (err) {
+        console.error("[MongoDB Atlas] getEnquiryById error:", err.message);
+      }
+    }
     const data = loadData();
     return (data.enquiries || []).find(e => e.id === id || e.referenceNumber === id);
   },
 
-  createEnquiry(payload) {
+  async createEnquiry(payload) {
     const data = loadData();
     const referenceNumber = generateEnquiryRef();
     const newEnquiry = {
@@ -72,26 +109,55 @@ export const StorageService = {
 
     // Sync to MongoDB Atlas if connected
     if (getMongoStatus()) {
-      Enquiry.create({
-        referenceNumber: newEnquiry.referenceNumber,
-        fullName: newEnquiry.fullName,
-        email: newEnquiry.email,
-        mobileNumber: newEnquiry.mobileNumber,
-        college: newEnquiry.college,
-        engineeringBranch: newEnquiry.engineeringBranch,
-        academicYear: newEnquiry.academicYear,
-        interestedCourse: newEnquiry.interestedCourse,
-        preferredSubject: newEnquiry.preferredSubject,
-        message: newEnquiry.message,
-        consent: newEnquiry.consent,
-        status: newEnquiry.status
-      }).catch(err => console.error("[MongoDB Atlas] Enquiry sync error:", err.message));
+      try {
+        const doc = await Enquiry.create({
+          referenceNumber: newEnquiry.referenceNumber,
+          fullName: newEnquiry.fullName,
+          email: newEnquiry.email,
+          mobileNumber: newEnquiry.mobileNumber,
+          college: newEnquiry.college,
+          engineeringBranch: newEnquiry.engineeringBranch,
+          academicYear: newEnquiry.academicYear,
+          interestedCourse: newEnquiry.interestedCourse,
+          preferredSubject: newEnquiry.preferredSubject,
+          message: newEnquiry.message,
+          consent: newEnquiry.consent,
+          status: newEnquiry.status
+        });
+        return { ...newEnquiry, id: doc._id.toString() };
+      } catch (err) {
+        console.error("[MongoDB Atlas] Enquiry sync error:", err.message);
+      }
     }
 
     return newEnquiry;
   },
 
-  updateEnquiry(id, updatePayload) {
+  async updateEnquiry(id, updatePayload) {
+    if (getMongoStatus()) {
+      try {
+        const isObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+        const query = isObjectId ? { $or: [{ _id: id }, { referenceNumber: id }] } : { referenceNumber: id };
+        const updateOps = {};
+        if (updatePayload.status) updateOps.status = updatePayload.status;
+        if (updatePayload.addNote) {
+          updateOps.$push = {
+            internalNotes: {
+              note: updatePayload.addNote,
+              author: updatePayload.noteAuthor || 'Admin',
+              createdAt: new Date()
+            }
+          };
+        }
+        const updated = await Enquiry.findOneAndUpdate(query, updateOps, { new: true }).lean();
+        if (updated) {
+          return { ...updated, id: updated._id.toString() };
+        }
+      } catch (err) {
+        console.error("[MongoDB Atlas] updateEnquiry error:", err.message);
+      }
+    }
+
     const data = loadData();
     const index = (data.enquiries || []).findIndex(e => e.id === id || e.referenceNumber === id);
     if (index === -1) return null;
@@ -123,12 +189,23 @@ export const StorageService = {
   },
 
   // --- CONTACT MESSAGES ---
-  getContacts() {
+  async getContacts() {
+    if (getMongoStatus()) {
+      try {
+        const docs = await ContactMessage.find({}).sort({ createdAt: -1 }).lean();
+        return docs.map(doc => ({
+          ...doc,
+          id: doc._id.toString()
+        }));
+      } catch (err) {
+        console.error("[MongoDB Atlas] getContacts error:", err.message);
+      }
+    }
     const data = loadData();
     return (data.contacts || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   },
 
-  createContact(payload) {
+  async createContact(payload) {
     const data = loadData();
     const newContact = {
       id: crypto.randomUUID(),
@@ -143,21 +220,36 @@ export const StorageService = {
     data.contacts = [newContact, ...(data.contacts || [])];
     saveData(data);
 
-    // Sync to MongoDB Atlas if connected
     if (getMongoStatus()) {
-      ContactMessage.create({
-        name: newContact.name,
-        email: newContact.email,
-        subject: newContact.subject,
-        message: newContact.message,
-        status: newContact.status
-      }).catch(err => console.error("[MongoDB Atlas] Contact sync error:", err.message));
+      try {
+        const doc = await ContactMessage.create({
+          name: newContact.name,
+          email: newContact.email,
+          subject: newContact.subject,
+          message: newContact.message,
+          status: newContact.status
+        });
+        return { ...newContact, id: doc._id.toString() };
+      } catch (err) {
+        console.error("[MongoDB Atlas] Contact sync error:", err.message);
+      }
     }
 
     return newContact;
   },
 
-  updateContactStatus(id, status) {
+  async updateContactStatus(id, status) {
+    if (getMongoStatus()) {
+      try {
+        const isObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+        if (isObjectId) {
+          const doc = await ContactMessage.findByIdAndUpdate(id, { status }, { new: true }).lean();
+          if (doc) return { ...doc, id: doc._id.toString() };
+        }
+      } catch (err) {
+        console.error("[MongoDB Atlas] updateContactStatus error:", err.message);
+      }
+    }
     const data = loadData();
     const index = (data.contacts || []).findIndex(c => c.id === id);
     if (index === -1) return null;
@@ -216,7 +308,20 @@ export const StorageService = {
   },
 
   // --- SEMINAR REGISTRATIONS ---
-  getSeminarRegistrations(seminarId = null) {
+  async getSeminarRegistrations(seminarId = null) {
+    if (getMongoStatus()) {
+      try {
+        const query = seminarId ? { seminarId } : {};
+        const docs = await SeminarRegistration.find(query).sort({ createdAt: -1 }).lean();
+        return docs.map(doc => ({
+          ...doc,
+          id: doc._id.toString()
+        }));
+      } catch (err) {
+        console.error("[MongoDB Atlas] getSeminarRegistrations error:", err.message);
+      }
+    }
+
     const data = loadData();
     let regs = data.seminarRegistrations || [];
     if (seminarId) {
@@ -225,7 +330,7 @@ export const StorageService = {
     return regs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   },
 
-  createSeminarRegistration(payload) {
+  async createSeminarRegistration(payload) {
     const data = loadData();
     const newRegistration = {
       id: crypto.randomUUID(),
@@ -247,18 +352,23 @@ export const StorageService = {
 
     // Sync to MongoDB Atlas if connected
     if (getMongoStatus()) {
-      SeminarRegistration.create({
-        fullName: newRegistration.fullName,
-        email: newRegistration.email,
-        mobileNumber: newRegistration.mobileNumber,
-        college: newRegistration.college,
-        engineeringBranch: newRegistration.engineeringBranch,
-        currentYear: newRegistration.currentYear,
-        message: newRegistration.message,
-        seminarId: newRegistration.seminarId,
-        seminarTitle: newRegistration.seminarTitle,
-        status: newRegistration.status
-      }).catch(err => console.error("[MongoDB Atlas] Seminar reg sync error:", err.message));
+      try {
+        const doc = await SeminarRegistration.create({
+          fullName: newRegistration.fullName,
+          email: newRegistration.email,
+          mobileNumber: newRegistration.mobileNumber,
+          college: newRegistration.college,
+          engineeringBranch: newRegistration.engineeringBranch,
+          currentYear: newRegistration.currentYear,
+          message: newRegistration.message,
+          seminarId: newRegistration.seminarId,
+          seminarTitle: newRegistration.seminarTitle,
+          status: newRegistration.status
+        });
+        return { ...newRegistration, id: doc._id.toString() };
+      } catch (err) {
+        console.error("[MongoDB Atlas] Seminar reg sync error:", err.message);
+      }
     }
 
     return newRegistration;
@@ -340,7 +450,31 @@ export const StorageService = {
   },
 
   // --- DASHBOARD STATS ---
-  getStats() {
+  async getStats() {
+    if (getMongoStatus()) {
+      try {
+        const [totalEnquiries, newEnquiries, totalContacts, unreadContacts, totalRegistrations] = await Promise.all([
+          Enquiry.countDocuments({}),
+          Enquiry.countDocuments({ status: "New" }),
+          ContactMessage.countDocuments({}),
+          ContactMessage.countDocuments({ status: "Unread" }),
+          SeminarRegistration.countDocuments({})
+        ]);
+        const data = loadData();
+        const seminars = data.seminars || [];
+        return {
+          totalEnquiries,
+          newEnquiries,
+          totalContacts,
+          unreadContacts,
+          totalRegistrations,
+          activeSeminars: seminars.filter(s => s.isPublished).length
+        };
+      } catch (err) {
+        console.error("[MongoDB Atlas] getStats error:", err.message);
+      }
+    }
+
     const data = loadData();
     const enquiries = data.enquiries || [];
     const newEnquiries = enquiries.filter(e => e.status === "New").length;
