@@ -16,15 +16,24 @@ const AboutPage = lazy(() => import('./pages/AboutPage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
-// Elegant loading fallback
+// Elegant loading fallback with official logo
 function PageFallback() {
   return (
-    <div className="min-h-[70vh] flex items-center justify-center bg-brand-offwhite">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-navy-deep p-0.5 shadow-gold-glow animate-pulse flex items-center justify-center">
-          <span className="font-heading font-extrabold text-gold text-lg">TZ</span>
+    <div className="min-h-screen flex items-center justify-center bg-navy-deep text-white">
+      <div className="flex flex-col items-center gap-4">
+        <div className="relative w-16 h-16 rounded-2xl overflow-hidden p-0.5 bg-gradient-to-br from-gold via-gold/50 to-navy-royal shadow-gold-glow animate-pulse flex items-center justify-center">
+          <img 
+            src="/logo.png" 
+            alt="TECHZONE" 
+            className="w-full h-full object-cover rounded-[14px]"
+          />
         </div>
-        <span className="text-xs font-heading font-semibold text-slate-500 uppercase tracking-widest">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-gold animate-bounce" style={{ animationDelay: '0ms' }} />
+          <div className="w-2 h-2 rounded-full bg-gold animate-bounce" style={{ animationDelay: '150ms' }} />
+          <div className="w-2 h-2 rounded-full bg-gold animate-bounce" style={{ animationDelay: '300ms' }} />
+        </div>
+        <span className="text-xs font-heading font-semibold text-slate-300 uppercase tracking-widest">
           Loading TECHZONE...
         </span>
       </div>
@@ -50,8 +59,10 @@ export default function App() {
           <Route path="/contact" element={<PageLayout><ContactPage /></PageLayout>} />
           <Route path="/about" element={<PageLayout><AboutPage /></PageLayout>} />
 
-          {/* Secure Admin Route (Standalone dedicated layout) */}
-          <Route path="/admin" element={<AdminPage />} />
+          {/* Secure Staff Portal (Secret custom route) */}
+          <Route path="/dharam" element={<AdminPage />} />
+          {/* Standard /admin returns 404 for security */}
+          <Route path="/admin" element={<PageLayout><NotFoundPage /></PageLayout>} />
 
           {/* 404 Route */}
           <Route path="*" element={<PageLayout><NotFoundPage /></PageLayout>} />

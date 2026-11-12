@@ -37,9 +37,9 @@ export default function AdminPage() {
     }
   });
 
-  // Login form state
-  const [loginUsername, setLoginUsername] = useState('admin');
-  const [loginPassword, setLoginPassword] = useState('adminpassword123');
+  // Login form state (empty, no autofill)
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState(null);
 
@@ -209,10 +209,10 @@ export default function AdminPage() {
               <img src="/logo.png" alt="TECHZONE Logo" className="w-full h-full object-cover rounded-[14px]" />
             </div>
             <h1 className="font-heading font-extrabold text-2xl text-navy-deep">
-              TECHZONE Admin Portal
+              TECHZONE Staff Portal
             </h1>
             <p className="text-xs text-brand-muted mt-1">
-              Authorized Personnel Access Only
+              Authorized Institute Access Only
             </p>
           </div>
 
@@ -234,7 +234,8 @@ export default function AdminPage() {
                   value={loginUsername}
                   onChange={(e) => setLoginUsername(e.target.value)}
                   required
-                  placeholder="admin"
+                  autoComplete="username"
+                  placeholder="Enter username"
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-navy focus:ring-1 focus:ring-navy text-sm outline-none"
                 />
                 <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
@@ -251,7 +252,8 @@ export default function AdminPage() {
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
                   required
-                  placeholder="••••••••••••"
+                  autoComplete="current-password"
+                  placeholder="Enter password"
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-navy focus:ring-1 focus:ring-navy text-sm outline-none"
                 />
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
@@ -270,12 +272,6 @@ export default function AdminPage() {
               </Button>
             </div>
           </form>
-
-          <div className="mt-6 pt-4 border-t border-slate-100 text-center">
-            <span className="text-[11px] text-slate-400">
-              Default Development Credentials: admin / adminpassword123
-            </span>
-          </div>
         </div>
       </div>
     );

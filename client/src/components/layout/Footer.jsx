@@ -253,9 +253,6 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-6">
-            <Link to="/admin" className="text-slate-400 hover:text-slate-300 transition-colors">
-              Staff Login
-            </Link>
             <button
               onClick={scrollToTop}
               className="inline-flex items-center gap-1.5 text-slate-300 hover:text-gold transition-colors group cursor-pointer"

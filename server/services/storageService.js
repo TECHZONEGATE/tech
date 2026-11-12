@@ -3,6 +3,7 @@ import { Enquiry } from '../models/Enquiry.js';
 import { ContactMessage } from '../models/ContactMessage.js';
 import { SeminarRegistration } from '../models/SeminarRegistration.js';
 import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
 
 // Helper to generate reference number
 function generateEnquiryRef() {
@@ -305,8 +306,37 @@ export const StorageService = {
 
   // --- ADMIN USERS ---
   getAdminByUsername(username) {
+    if (!username) return null;
+    const cleanUser = username.trim().toLowerCase();
+
+    // 1. Dynamic Environment Variable Admin Check
+    const envAdminUser = (process.env.ADMIN_USERNAME || 'dharamveer').trim().toLowerCase();
+    const envAdminPass = (process.env.ADMIN_PASSWORD || 'Dharamveer@1424').trim();
+
+    if (cleanUser === envAdminUser) {
+      return {
+        id: "admin-env",
+        username: process.env.ADMIN_USERNAME || 'dharamveer',
+        email: "info.techzone.gate@gmail.com",
+        passwordHash: bcrypt.hashSync(envAdminPass, 10),
+        role: "superadmin"
+      };
+    }
+
+    // 2. Direct hard-configured dharamveer credentials
+    if (cleanUser === 'dharamveer') {
+      return {
+        id: "admin-dharamveer",
+        username: "dharamveer",
+        email: "info.techzone.gate@gmail.com",
+        passwordHash: bcrypt.hashSync("Dharamveer@1424", 10),
+        role: "superadmin"
+      };
+    }
+
+    // 3. Fallback to persisted admin users in data file
     const data = loadData();
-    return (data.adminUsers || []).find(u => u.username === username);
+    return (data.adminUsers || []).find(u => u.username?.toLowerCase() === cleanUser);
   },
 
   // --- DASHBOARD STATS ---
